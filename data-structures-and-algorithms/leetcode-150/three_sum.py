@@ -10,6 +10,16 @@ class Solution:
         pass
 
     def twoSum(self, nums: List[int], target: int) -> List[int]:
+        """
+        Finds all unique pairs of integers in the given list that sum up to the target value.
+
+        Args:
+            nums (List[int]): A list of integers.
+            target (int): The target sum for the pairs.
+
+        Returns:
+            List[int]: A list of unique pairs (tuples) of integers that sum up to the target value.
+        """
         hmap = dict()
         res = set()
 
@@ -23,15 +33,57 @@ class Solution:
 
         return list(res)
 
-    def threeSum(self, nums: List[int], target: int) -> List[int]:
-        res = set()
-        nums.sort()
-        "x, y, z => x + y + z = target => target - x = y + z"
-        for i in range(len(nums) - 2):
-            for two_sum_pairs in self.twoSum(nums[i + 1 :], target - nums[i]):
-                res.add(tuple([nums[i]] + list(two_sum_pairs)))
+    def twoSum2(self, nums: List[int], i: int, res: List[int]):
+        """
+        Finds all unique pairs in the list `nums` that sum up to zero when added to the element at index `i`.
 
-        return list(res)
+        Args:
+            nums (List[int]): The list of integers to search for pairs.
+            i (int): The index of the current element to which pairs are being summed.
+            res (List[int]): The list to store the resulting pairs that sum up to zero.
+
+        Returns:
+            None: The results are appended to the `res` list.
+        """
+        lo = i + 1
+        hi = len(nums) - 1
+
+        while lo < hi:
+            s = nums[i] + nums[lo] + nums[hi]
+            if s < 0:
+                lo += 1
+            elif s > 0:
+                hi -= 1
+            else:
+                res.append([nums[i], nums[lo], nums[hi]])
+                lo += 1
+                hi -= 1
+
+                # avoid duplicates
+                while lo < hi and nums[lo] == nums[lo - 1]:
+                    lo += 1
+
+    def threeSum(self, nums: List[int], target: int) -> List[int]:
+        # res = set()
+        nums.sort()
+        res = []
+
+        for i in range(len(nums)):
+            # if the current element is greater than zero, then the sum of the current element and the next two elements will be greater than zero
+            if nums[i] > 0:
+                break
+
+            # avoid duplicates
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+
+            self.twoSum2(nums, i, res)
+        # "x, y, z => x + y + z = target => target - x = y + z"
+        # for i in range(len(nums) - 2):
+        #     for two_sum_pairs in self.twoSum(nums[i + 1 :], target - nums[i]):
+        #         res.add(tuple([nums[i]] + list(two_sum_pairs)))
+
+        return res
 
 
 # print("test case 1: ", Solution().twoSum([1, 2, 3, 4, 5, 6, 7], 12))
