@@ -34,12 +34,15 @@ class Solution:
                     start = end
                     continue
 
-                # If the current word is in the word counter but the frequency of the current word is greater than the frequency of the word in the word counter, we remove the word from the start of the substring
+                # If the current word is in the word counter
+                # but the frequency of the current word is greater than the frequency of the word in the word counter,
+                # we remove the word from the start of the substring
                 while current_counter[current_word] > word_counter[current_word]:
                     current_counter[s[start : start + word_len]] -= 1
                     start += word_len
 
-                # If the current counter is equal to the word counter, we add the start index to the result
+                # If the current counter is equal to the word counter,
+                # we add the start index to the result
                 if current_counter == word_counter:
                     res.append(start)
 
