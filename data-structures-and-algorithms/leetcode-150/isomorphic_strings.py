@@ -16,35 +16,25 @@ class Solution:
         Returns:
             bool: True if the strings are isomorphic, False otherwise.
         """
-        s_cnt, t_cnt = 0, 0
-        s_counter, t_counter = Counter(s), Counter(t)
+        s_map, t_map = {}, {}
 
-        for i in range(len(s) - 1):
-            if s[i] != s[i + 1]:
-                s_cnt = 0
-            else:
-                s_cnt += 1
+        for c_s, t_s in zip(s, t):
+            if c_s not in s_map and t_s not in t_map:
+                s_map[c_s] = t_s
+                t_map[t_s] = c_s
 
-            if t[i] != t[i + 1]:
-                t_cnt = 0
-            else:
-                t_cnt += 1
-
-            s_cnt += 1
-            t_cnt += 1
-
-            if s_cnt != t_cnt or s_counter[s[i]] < t_counter[t[i]]:
+            if s_map.get(c_s) != t_s or t_map.get(t_s) != c_s:
                 return False
 
         return True
 
 
 # edge cases
-# assert Solution().isIsomorphic("", "") is True
-# assert Solution().isIsomorphic("a", "a") is True
-# assert Solution().isIsomorphic("a", "b") is True
-# assert Solution().isIsomorphic("bbbaaaba", "aaabbbba") is False
+assert Solution().isIsomorphic("a", "a") is True
+assert Solution().isIsomorphic("a", "b") is True
+assert Solution().isIsomorphic("bbbaaaba", "aaabbbba") is False
 assert Solution().isIsomorphic("badc", "baba") is False
+assert Solution().isIsomorphic("aaeaa", "uuxyy") is False
 
 assert Solution().isIsomorphic("egg", "add") is True
 assert Solution().isIsomorphic("foo", "bar") is False
