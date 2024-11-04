@@ -1,5 +1,18 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
+        """
+        Determines if two strings are anagrams of each other.
+
+        An anagram is a word or phrase formed by rearranging the letters of a different word or phrase,
+        typically using all the original letters exactly once.
+
+        Args:
+            s (str): The first string to compare.
+            t (str): The second string to compare.
+
+        Returns:
+            bool: True if the strings are anagrams, False otherwise.
+        """
         if len(s) != len(t):
             return False
 
