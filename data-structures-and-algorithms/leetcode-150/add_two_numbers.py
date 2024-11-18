@@ -49,3 +49,34 @@ class Solution:
             s = 0  # reset current sum
 
         return head
+
+    def addTwoNumbers2(
+        self, l1: Optional[ListNode], l2: Optional[ListNode]
+    ) -> Optional[ListNode]:
+        # create a new linked list to store sum
+        res = ListNode(0)
+        curr_node = res
+
+        # init current sum and complement
+        s, c = 0, 0
+
+        # 1,2,3
+        # 1,8
+        # 2,0,4
+
+        # iterate through linked lists
+        while l1 or l2 or c > 0:
+            l1_value = l1.val if l1 else 0
+            l2_value = l2.val if l2 else 0
+
+            current_value = l1_value + l2_value + c
+            new_node = ListNode(current_value % 10)
+            c = current_value // 10  # store complement
+
+            curr_node.next = new_node
+            curr_node = new_node
+
+            l1 = l1.next if l1 else None
+            l2 = l2.next if l2 else None
+
+        return res.next
